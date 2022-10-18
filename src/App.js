@@ -2,7 +2,7 @@ import './App.css';
 import React from 'react';
 import NavBar from './components/NavBar';
 import HomePage from './pages/home/HomePage';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import NotFoundPage from './pages/error-pages/NotFoundPage';
 import LoginPage from './pages/login/LoginPage';
 import RegisterPage from './pages/login/RegisterPage';
