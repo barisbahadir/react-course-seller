@@ -11,10 +11,9 @@ import AdminPage from './pages/admin/AdminPage';
 import UnauthorizedPage from './pages/error-pages/UnauthorizedPage';
 
 class App extends Component {
-
     constructor(props) {
         super(props);
-        this.state={
+        this.state = {
             isLoggedIn: true
         }
     }
@@ -23,16 +22,13 @@ class App extends Component {
         console.log("Is Logged In: ", this.state.isLoggedIn)
     }
 
-
     render() {
         return (
             <div className="App">
                 <NavBar/>
                 <div className='container'>
                     <Routes>
-                        <Route exact path="/">
-
-                        </Route>
+                        <Route exact path="/" element={this.state.isLoggedIn ? <HomePage/> : <LoginPage/>}/>
                         <Route path="/home" element={<HomePage/>}/>
                         <Route path="/login" element={<LoginPage/>}/>
                         <Route path="/register" element={<RegisterPage/>}/>
