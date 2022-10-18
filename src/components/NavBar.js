@@ -1,70 +1,41 @@
-import React, { Component }  from 'react';
-import {
-  Collapse,
-  Navbar,
-  NavbarToggler,
-  NavbarBrand,
-  Nav,
-  NavItem,
-  NavLink,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem } from 'reactstrap';
+import React from 'react';
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
 
-class NavBar extends Component {
+function NavBar() {
+  return (
+        <Navbar bg="dark" variant="dark" expand="lg">
+          <Container>
+            <Navbar.Brand href="/">Course Seller</Navbar.Brand>
+            <Navbar.Toggle aria-controls="basic-navbar-nav" />
+            <Navbar.Collapse id="basic-navbar-nav">
+              <Nav className="me-auto">
+                <Nav.Link href="/">Home</Nav.Link>
+                <Nav.Link href="/login">Login</Nav.Link>
+                <Nav.Link href="/register">Register</Nav.Link>
+                <Nav.Link href="/profile">Profile</Nav.Link>
+                <Nav.Link href="/admin">Admin</Nav.Link>
 
-    constructor(props) {
-        super(props);
-    
-        this.toggle = this.toggle.bind(this);
-        this.state = {
-          isOpen: false
-        };
-      }
-
-    toggle() {
-        this.setState({
-          isOpen: !this.state.isOpen
-        });
-      }
-      render() {
-        return (
-          <div>
-            <Navbar color="light" light expand="md">
-              <NavbarBrand href="/">reactstrap</NavbarBrand>
-              <NavbarToggler onClick={this.toggle} />
-              <Collapse isOpen={this.state.isOpen} navbar>
-                <Nav className="ml-auto" navbar>
-                  <NavItem>
-                    <NavLink href="/components/">Components</NavLink>
-                  </NavItem>
-                  <NavItem>
-                    <NavLink href="https://github.com/reactstrap/reactstrap">GitHub</NavLink>
-                  </NavItem>
-                  <UncontrolledDropdown nav inNavbar>
-                    <DropdownToggle nav caret>
-                      Options
-                    </DropdownToggle>
-                    <DropdownMenu right>
-                      <DropdownItem>
-                        Option 1
-                      </DropdownItem>
-                      <DropdownItem>
-                        Option 2
-                      </DropdownItem>
-                      <DropdownItem divider />
-                      <DropdownItem>
-                        Reset
-                      </DropdownItem>
-                    </DropdownMenu>
-                  </UncontrolledDropdown>
-                </Nav>
-              </Collapse>
-            </Navbar>
-          </div>
-        );
-      }
+                {/* <NavDropdown title="Dropdown" id="basic-nav-dropdown">
+                  <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
+                  <NavDropdown.Item href="#action/3.2">
+                    Another action
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+                  <NavDropdown.Divider />
+                  <NavDropdown.Item href="#action/3.4">
+                    Separated link
+                  </NavDropdown.Item>
+                </NavDropdown> */}
+              </Nav>
+                <Navbar.Text>
+                    Signed in as: <a href="/login">BAHADIR</a>
+                </Navbar.Text>
+            </Navbar.Collapse>
+          </Container>
+        </Navbar>
+  );
 }
 
 export default NavBar;
