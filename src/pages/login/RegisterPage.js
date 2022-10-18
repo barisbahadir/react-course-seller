@@ -1,42 +1,48 @@
-import React, {Component, useEffect, useState} from 'react'
-import User from "../../models/user";
-import {Alert} from "react-bootstrap";
+import React, {useEffect, useState} from 'react';
 import {useSelector} from "react-redux";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import AuthenticationService from "../../services/authentication-service";
-import {ErrorMessageText} from "../../common/Contants";
-import './RegisterPage.css'
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faUser} from "@fortawesome/free-solid-svg-icons";
+import {faUserCircle} from "@fortawesome/free-solid-svg-icons";
+import User from "../../models/user";
+import './RegisterPage.css'
+import {ErrorMessageText} from "../../common/Contants";
 
-function RegisterPage() {
+function RegisterPage(props) {
 
     const [user, setUser] = useState(new User('', '', ''));
     const [loading, setLoading] = useState(false);
     const [submitted, setSubmitted] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
 
-    const currentUser = useSelector(state => state.user)
+    const currentUser = useSelector(state => state.user);
 
     const navigate = useNavigate();
+
     //mounted
     useEffect(() => {
-        if (currentUser && currentUser.id)
+        if (currentUser && currentUser.id) {
             navigate('/profile');
+        }
     }, []);
 
+    //<input onChange=(event => handleChange(event))>
     const handleChange = (e) => {
-        const {name, value} = value.target;
+        const {name, value} = e.target;
 
         setUser((prevState => {
+            //E.g: prevState ({user: abc, pass: abc}) + newKeyValue ({user: abcd}) => ({user: abcd, pass: abc})
             return {
                 ...prevState,
                 [name]: value
-            }
-        }))
+            };
+        }));
     }
 
-    const handleRegister = () => {
+    const handleRegister = (e) => {
+
+        e.preventDefault();
+
         setSubmitted(true);
 
         //validation
@@ -45,81 +51,97 @@ function RegisterPage() {
         }
 
         setLoading(true);
+
         AuthenticationService.register(user).then(_ => {
             navigate('/login');
         }).catch(error => {
-            console.log('Register User Response has Error: ', error);
-            setErrorMessage(ErrorMessageText(error.response.status));
-        }).finally(() => {
+            console.log(error);
+            if (error && error.response && error.response.status)
+                setErrorMessage(ErrorMessageText(error.response.status));
             setLoading(false);
         });
-    }
+    };
 
     return (
-        <>
-            <div className="container mt-5">
-                <div className="card ms-auto me-auto p-3 shadow-lg custom-card">
-                    <FontAwesomeIcon icon={faUser} className='ms-auto me-auto user-icon'/>
-                    {
-                        errorMessage != '' && <div className="alert alert-danger mt-2">
-                            {errorMessage}
+        <div className="container mt-5">
+            <div className="card ms-auto me-auto p-3 shadow-lg custom-card">
+
+                <FontAwesomeIcon icon={faUserCircle} className="ms-auto me-auto user-icon"/>
+
+                {errorMessage &&
+                    <div className="alert alert-danger">
+                        {errorMessage}
+                    </div>
+                }
+
+                <form
+                    onSubmit={(e) => handleRegister(e)}
+                    noValidate
+                    className={submitted ? 'was-validated' : ''}
+                >
+                    <div className="form-group">
+                        <label htmlFor="name">Full Name: </label>
+                        <input
+                            type="text"
+                            className="form-control"
+                            name="name"
+                            placeholder="name"
+                            value={user.name}
+                            onChange={(e) => handleChange(e)}
+                            required
+                        />
+                        <div className="invalid-feedback">
+                            Full name is required.
                         </div>
-                    }
+                    </div>
 
-                    Deneme
-                </div>
+                    <div className="form-group">
+                        <label htmlFor="username">Username: </label>
+                        <input
+                            type="text"
+                            className="form-control"
+                            name="username"
+                            placeholder="username"
+                            value={user.username}
+                            onChange={(e) => handleChange(e)}
+                            required
+                        />
+                        <div className="invalid-feedback">
+                            Username is required.
+                        </div>
+                    </div>
+
+                    <div className="form-group">
+                        <label htmlFor="password">Password: </label>
+                        <input
+                            type="password"
+                            className="form-control"
+                            name="password"
+                            placeholder="password"
+                            value={user.password}
+                            onChange={(e) => handleChange(e)}
+                            required
+                        />
+                        <div className="invalid-feedback">
+                            Password is required.
+                        </div>
+                    </div>
+
+                    <button
+                        className="btn btn-info w-100 mt-3"
+                        disabled={loading}>
+                        Sign Up
+                    </button>
+
+                </form>
+
+                <Link to="/login" className="btn btn-link" style={{color: 'darkgray'}}>
+                    I have an Account!
+                </Link>
+
             </div>
-        </>
-
+        </div>
     );
 }
 
 export default RegisterPage;
-
-
-// class RegisterPage extends Component {
-//     constructor(props) {
-//         super(props);
-//         this.state = {
-//             isLoading: false,
-//             user: new User('', '', ''),
-//             submitted: false,
-//             errorMessage: ''
-//         }
-//     }
-//
-//     const currentUser = useSelector(state => state.user);
-//
-//     componentDidMount() {
-//
-//     }
-//
-//     setIsLoading = (loadingStatus) => {
-//         this.setState({isLoading: loadingStatus});
-//     }
-//
-//     setUser = (user) => {
-//         this.setState({user: user});
-//     }
-//
-//     checkErrors = () => {
-//         return <Alert variant="danger">
-//             <Alert.Heading>Error!</Alert.Heading>
-//             <div>
-//                 Username or password incorrect!
-//             </div>
-//         </Alert>;
-//     }
-//
-//     render() {
-//         return (
-//             <>
-//                 {this.checkErrors()}
-//                 <div>RegisterPage</div>
-//             </>
-//
-//         )
-//     }
-// }
-//
-// export default RegisterPage;

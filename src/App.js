@@ -2,7 +2,7 @@ import './App.css';
 import React, {Component} from 'react';
 import NavBar from './components/NavBar';
 import HomePage from './pages/home/HomePage';
-import {Route, Routes} from 'react-router-dom';
+import {Navigate, Route, Routes} from 'react-router-dom';
 import NotFoundPage from './pages/error-pages/NotFoundPage';
 import LoginPage from './pages/login/LoginPage';
 import RegisterPage from './pages/login/RegisterPage';
@@ -33,7 +33,7 @@ class App extends Component {
                 <NavBar/>
                 <div className='container'>
                     <Routes>
-                        <Route exact path="/" element={this.state.isLoggedIn ? <HomePage/> : <LoginPage/>}/>
+                        <Route exact path="/" element={<HomePage/>}/>
                         <Route path="/home" element={<HomePage/>}/>
                         <Route path="/login" element={<LoginPage/>}/>
                         <Route path="/register" element={<RegisterPage/>}/>
