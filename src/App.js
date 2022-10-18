@@ -14,17 +14,22 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isLoggedIn: true
+            isLoggedIn: false
         }
     }
 
     componentDidMount() {
-        console.log("Is Logged In: ", this.state.isLoggedIn)
+        console.log("Is Logged In: ", this.state.isLoggedIn);
     }
 
     render() {
         return (
             <div className="App">
+                {
+                    // (window.location.pathname === '/login' || window.location.pathname === '/register')
+                    //     ? null
+                    //     : <NavBar/>
+                }
                 <NavBar/>
                 <div className='container'>
                     <Routes>
