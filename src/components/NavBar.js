@@ -2,20 +2,21 @@ import React from 'react';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {clearCurrentUser} from "../store/actions/user-actions";
 import {useNavigate} from "react-router-dom";
 import {Role} from "../models/role";
 
 function NavBar() {
 
-    const currentUser = {
-        username: "Leo",
-        password: "Leo",
-        name: "Leo",
-        role: Role.ADMIN
-    };
-    //const currentUser = useSelector(state => state.user);
+    // const currentUser = {
+    //     username: "Leo",
+    //     password: "Leo",
+    //     name: "Leo",
+    //     role: Role.ADMIN
+    // };
+
+    const currentUser = useSelector(state => state.user);
 
     const dispatch = useDispatch();
 
@@ -54,7 +55,7 @@ function NavBar() {
                         currentUser && <>
                             <Navbar.Text>
                                 <a
-                                    href="/"
+                                    href="#"
                                     className="nav-link"
                                     onClick={() => logout()}
                                 >Logout: {currentUser.username}</a>
