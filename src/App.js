@@ -13,16 +13,6 @@ import {AuthGuard} from "./guard/AuthGuard";
 import {Role} from "./models/role";
 
 class App extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            isLoggedIn: false
-        }
-    }
-
-    componentDidMount() {
-        console.log("Is Logged In: ", this.state.isLoggedIn);
-    }
 
     getAuthorizedUserPages = (component) => {
         return <AuthGuard roles={[Role.ADMIN, Role.USER]}>
@@ -58,6 +48,7 @@ class App extends Component {
                         <Route path="/404" element={<NotFoundPage/>}/>
                         <Route path="/401" element={<UnauthorizedPage/>}/>
                         <Route path="*" element={<NotFoundPage/>}/>
+
                     </Routes>
                 </div>
             </div>
